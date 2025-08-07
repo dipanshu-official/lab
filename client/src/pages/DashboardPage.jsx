@@ -1,35 +1,42 @@
-import React, { useState } from 'react';
-import { Search, Menu, Bell, Settings, User, Plus, X } from 'lucide-react';
+import React, { useState } from "react";
+import { Search, Menu, Bell, Settings, User, Plus, X } from "lucide-react";
+import Header from "../components/main/Header.jsx";
+import Sidebar from "../components/main/Sidebar.jsx";
 
 const DashboardPage = () => {
   const [formData, setFormData] = useState({
-    patientId: '250804001',
-    designation: 'MR',
-    firstName: '',
-    lastName: '',
-    age: '',
-    ageType: 'Year',
-    gender: 'Male',
-    referringDoctor: '',
-    rateListType: 'Main',
-    dispatchMethods: ['Email', 'Hardcopy', 'SMS', 'WhatsApp'],
-    manualWhatsApp: false
+    patientId: "250804001",
+    designation: "MR",
+    firstName: "",
+    lastName: "",
+    age: "",
+    ageType: "Year",
+    gender: "Male",
+    referringDoctor: "",
+    rateListType: "Main",
+    dispatchMethods: ["Email", "Hardcopy", "SMS", "WhatsApp"],
+    manualWhatsApp: false,
   });
 
-  const [selectedDispatchMethods, setSelectedDispatchMethods] = useState(['Email', 'Hardcopy', 'SMS', 'WhatsApp']);
+  const [selectedDispatchMethods, setSelectedDispatchMethods] = useState([
+    "Email",
+    "Hardcopy",
+    "SMS",
+    "WhatsApp",
+  ]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleDispatchMethodToggle = (method) => {
-    setSelectedDispatchMethods(prev => {
+    setSelectedDispatchMethods((prev) => {
       if (prev.includes(method)) {
-        return prev.filter(m => m !== method);
+        return prev.filter((m) => m !== method);
       } else {
         return [...prev, method];
       }
@@ -38,130 +45,8 @@ const DashboardPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header Navbar */}
-      <nav className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Left side */}
-            <div className="flex items-center">
-              <Menu className="h-6 w-6 text-gray-500 mr-4" />
-              <div className="flex items-center">
-                <div className="text-2xl font-bold text-sky-600">flabs</div>
-              </div>
-            </div>
-
-            {/* Center - Search */}
-            <div className="flex-1 max-w-md mx-8">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search patient by contact, name, IDs"
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-sm"
-                />
-              </div>
-            </div>
-
-            {/* Right side */}
-            <div className="flex items-center space-x-4">
-              <select className="border border-gray-300 rounded-md px-3 py-2 text-sm bg-white">
-                <option>Testing</option>
-              </select>
-              <div className="flex items-center space-x-2">
-                <User className="h-5 w-5 text-gray-500" />
-                <span className="text-sm text-gray-700">Testing</span>
-              </div>
-              <Bell className="h-5 w-5 text-gray-500" />
-              <button className="text-gray-500 hover:text-gray-700">Help</button>
-              <Settings className="h-5 w-5 text-gray-500" />
-              <Bell className="h-5 w-5 text-gray-500" />
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Sidebar and Main Content */}
       <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-white border-r border-gray-200 min-h-screen">
-          <div className="p-4">
-            {/* Main Navigation */}
-            <nav className="space-y-2">
-              <div className="flex items-center px-3 py-2 text-sky-600 bg-sky-50 rounded-md">
-                <User className="h-4 w-4 mr-3" />
-                <span className="text-sm font-medium">New Registration</span>
-              </div>
-              
-              <div className="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md">
-                <div className="h-4 w-4 mr-3" />
-                <span className="text-sm">Analysis</span>
-              </div>
-              
-              <div className="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md">
-                <div className="h-4 w-4 mr-3" />
-                <span className="text-sm">Patient List</span>
-              </div>
-              
-              <div className="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md">
-                <div className="h-4 w-4 mr-3" />
-                <span className="text-sm">Enter & Verify</span>
-              </div>
-              
-              <div className="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md">
-                <div className="h-4 w-4 mr-3" />
-                <span className="text-sm">Financial Analysis</span>
-              </div>
-
-              {/* Tests Section */}
-              <div className="pt-4">
-                <div className="flex items-center px-3 py-2 text-gray-700">
-                  <div className="h-4 w-4 mr-3" />
-                  <span className="text-sm font-medium">Tests</span>
-                </div>
-                <div className="ml-6 space-y-1">
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded">Test List</div>
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded">Packages</div>
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded flex items-center">
-                    Outsource <span className="ml-2 text-xs bg-blue-100 text-blue-800 px-1 rounded">PRO</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Lab Management Section */}
-              <div className="pt-4">
-                <div className="flex items-center px-3 py-2 text-gray-700">
-                  <div className="h-4 w-4 mr-3" />
-                  <span className="text-sm font-medium">Lab Management</span>
-                </div>
-                <div className="ml-6 space-y-1">
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded">Referral List</div>
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded">Manage Users</div>
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded">Processing Lab</div>
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded">B2B</div>
-                </div>
-              </div>
-
-              {/* Inventory Section */}
-              <div className="pt-4">
-                <div className="flex items-center px-3 py-2 text-gray-700">
-                  <div className="h-4 w-4 mr-3" />
-                  <span className="text-sm font-medium">Inventory</span>
-                </div>
-                <div className="ml-6 space-y-1">
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded">Dashboard</div>
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded">Current Stock</div>
-                  <div className="px-3 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded">Purchase Order</div>
-                </div>
-              </div>
-
-              <div className="flex items-center px-3 py-2 text-gray-700 hover:bg-gray-50 rounded-md">
-                <div className="h-4 w-4 mr-3" />
-                <span className="text-sm">Lab Profile</span>
-              </div>
-            </nav>
-          </div>
-        </div>
-
         {/* Main Content */}
         <div className="flex-1 p-6">
           {/* Header with search and buttons */}
@@ -297,7 +182,7 @@ const DashboardPage = () => {
                       type="radio"
                       name="gender"
                       value="Male"
-                      checked={formData.gender === 'Male'}
+                      checked={formData.gender === "Male"}
                       onChange={handleInputChange}
                       className="h-4 w-4 text-sky-600 focus:ring-sky-500"
                     />
@@ -308,7 +193,7 @@ const DashboardPage = () => {
                       type="radio"
                       name="gender"
                       value="Female"
-                      checked={formData.gender === 'Female'}
+                      checked={formData.gender === "Female"}
                       onChange={handleInputChange}
                       className="h-4 w-4 text-sky-600 focus:ring-sky-500"
                     />
@@ -319,7 +204,7 @@ const DashboardPage = () => {
                       type="radio"
                       name="gender"
                       value="Other"
-                      checked={formData.gender === 'Other'}
+                      checked={formData.gender === "Other"}
                       onChange={handleInputChange}
                       className="h-4 w-4 text-sky-600 focus:ring-sky-500"
                     />
@@ -369,13 +254,13 @@ const DashboardPage = () => {
                   Dispatch Methods
                 </label>
                 <div className="flex flex-wrap gap-2">
-                  {['Email', 'Hardcopy', 'SMS', 'WhatsApp'].map((method) => (
+                  {["Email", "Hardcopy", "SMS", "WhatsApp"].map((method) => (
                     <span
                       key={method}
                       className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
                         selectedDispatchMethods.includes(method)
-                          ? 'bg-sky-100 text-sky-800'
-                          : 'bg-gray-100 text-gray-800'
+                          ? "bg-sky-100 text-sky-800"
+                          : "bg-gray-100 text-gray-800"
                       }`}
                     >
                       {method}
@@ -391,10 +276,17 @@ const DashboardPage = () => {
                     <input
                       type="checkbox"
                       checked={formData.manualWhatsApp}
-                      onChange={(e) => setFormData(prev => ({ ...prev, manualWhatsApp: e.target.checked }))}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          manualWhatsApp: e.target.checked,
+                        }))
+                      }
                       className="h-3 w-3 text-sky-600 focus:ring-sky-500 rounded"
                     />
-                    <span className="ml-1 text-xs text-gray-700">Manual WhatsApp</span>
+                    <span className="ml-1 text-xs text-gray-700">
+                      Manual WhatsApp
+                    </span>
                   </label>
                 </div>
               </div>

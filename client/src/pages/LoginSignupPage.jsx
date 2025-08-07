@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, User, Building, Users, Briefcase } from "lucide-react";
+import {useDispatch} from "react-redux"
+import { loginAdmin, signupAdmin } from "../store/globalAction";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const LoginSignupPage = () => {
   const [activeTab, setActiveTab] = useState("User");
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [loginMethod, setLoginMethod] = useState("phone"); // 'phone', 'username', 'password'
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     phone: "",
-    username: "",
     password: "",
     labName: "",
+    username: "",
     ownerName: "",
     email: "",
     patientCount: "",
@@ -26,10 +31,43 @@ const LoginSignupPage = () => {
     }));
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", { activeTab, isLoginMode, formData });
+
+    const signupData = {
+      phone: formData.phone,
+      password: formData.password,
+      labName: formData.labName,
+      ownerName: formData.ownerName,
+      email: formData.email,
+      patientCount: formData.patientCount,
+      previousSoftware: formData.previousSoftware,
+    };
+    const loginData = {
+      email: formData.email,
+      password: formData.password,
+    };
+
     // Handle authentication logic here
+    if (isLoginMode) {
+      if (loginMethod === "phone") {
+        // Handle OTP logic
+        getOTP();
+      } else {
+        // Dispatch login action
+        dispatch(loginAdmin(loginData));
+        navigate("/dashboard");
+        toast.success("Login successful!");
+      }
+    } else {
+      // Dispatch signup action
+      dispatch(signupAdmin(signupData));
+      navigate("/login");
+      toast.success("Signup successful! Please log in.");
+    }
   };
 
   const getOTP = () => {
@@ -155,12 +193,12 @@ const LoginSignupPage = () => {
                     )}
 
                     {/* Username Login */}
-                    {loginMethod === "username" && (
+                    {loginMethod === "email" && (
                       <input
                         type="text"
-                        name="username"
-                        placeholder="Enter username"
-                        value={formData.username}
+                        name="email"
+                        placeholder="Enter email"
+                        value={formData.email}
                         onChange={handleInputChange}
                         className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none"
                         required
@@ -172,9 +210,9 @@ const LoginSignupPage = () => {
                       <>
                         <input
                           type="text"
-                          name="username"
-                          placeholder="Username or Email"
-                          value={formData.username}
+                          name="email"
+                          placeholder=" Email"
+                          value={formData.email}
                           onChange={handleInputChange}
                           className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none"
                           required
@@ -277,6 +315,15 @@ const LoginSignupPage = () => {
                   className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none"
                   required
                 />
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 pr-12 border border-slate-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none"
+                  required
+                />
 
                 <div className="flex">
                   <div className="flex items-center px-3 bg-slate-50 border border-r-0 border-slate-300 rounded-l-lg">
@@ -328,7 +375,7 @@ const LoginSignupPage = () => {
                 ? canLoginWithPhone && loginMethod === "phone"
                   ? "Get OTP"
                   : "Log In"
-                : "Get OTP"}
+                : "Sign Up"}
             </button>
 
             {/* Alternative Login Option */}
