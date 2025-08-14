@@ -1,7 +1,7 @@
 import React from "react";
 import { Search, Menu, Bell, Settings, User } from "lucide-react";
 
-const header = () => {
+const Header = ({ onToggleSidebar }) => {
   return (
     <div>
       <nav className="bg-white border-b border-gray-200 shadow-sm">
@@ -9,7 +9,7 @@ const header = () => {
           <div className="flex justify-between items-center h-16">
             {/* Left side */}
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Menu className="h-6 w-6 text-gray-500 mr-4" />
+              <Menu onClick={onToggleSidebar} className="h-6 w-6 text-gray-500 mr-4" />
               <div className="w-8 h-8 bg-gradient-to-r from-sky-500 to-emerald-500 rounded-lg flex items-center justify-center">
                 <div className="w-4 h-4 bg-white rounded transform rotate-45"></div>
               </div>
@@ -53,4 +53,4 @@ const header = () => {
   );
 };
 
-export default header;
+export default Header;

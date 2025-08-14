@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Search, Menu, Bell, Settings, User, Plus, X } from "lucide-react";
-import Header from "../components/main/Header.jsx";
-import Sidebar from "../components/main/Sidebar.jsx";
+
 
 const DashboardPage = () => {
   const [formData, setFormData] = useState({

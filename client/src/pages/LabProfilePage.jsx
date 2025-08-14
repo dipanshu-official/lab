@@ -88,7 +88,7 @@ const LabProfilePage = () => {
                     type="tel"
                     value={formData.contact}
                     onChange={(e) => handleInputChange('contact', e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -133,7 +133,7 @@ const LabProfilePage = () => {
                     type="text"
                     value={formData.website.replace('https://', '')}
                     onChange={(e) => handleInputChange('website', 'https://' + e.target.value)}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
               </div>

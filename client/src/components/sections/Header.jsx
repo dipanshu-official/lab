@@ -7,6 +7,8 @@ export const Header = () => {
   const [showNavShadow, setShowNavShadow] = useState(false);
   const navigate = useNavigate();
 
+
+
   useEffect(() => {
     const handleScroll = () => {
       setShowNavShadow(window.pageYOffset > 10);

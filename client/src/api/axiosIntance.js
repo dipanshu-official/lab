@@ -25,7 +25,9 @@ const successMessage = function (response) {
 const errorFunction = function (error) {
   const message = error?.response?.data?.message;
   if (message) {
+    // Display error message in console
     toast.error(message);
+
     console.log(message)
   }
   throw error;

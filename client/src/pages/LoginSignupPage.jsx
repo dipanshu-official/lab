@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, User, Building, Users, Briefcase } from "lucide-react";
-import {useDispatch} from "react-redux"
+import { useDispatch } from "react-redux";
 import { loginAdmin, signupAdmin } from "../store/globalAction";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
@@ -32,12 +32,12 @@ const LoginSignupPage = () => {
   };
 
   const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", { activeTab, isLoginMode, formData });
 
     const signupData = {
+      role: activeTab, // ✅ Added role
       phone: formData.phone,
       password: formData.password,
       labName: formData.labName,
@@ -46,27 +46,30 @@ const LoginSignupPage = () => {
       patientCount: formData.patientCount,
       previousSoftware: formData.previousSoftware,
     };
+
     const loginData = {
+      role: activeTab, // ✅ Added role
       email: formData.email,
       password: formData.password,
     };
 
-    // Handle authentication logic here
-    if (isLoginMode) {
-      if (loginMethod === "phone") {
-        // Handle OTP logic
-        getOTP();
+    try {
+      if (isLoginMode) {
+        if (loginMethod === "phone") {
+          await getOTP(); // Assuming getOTP is async
+          toast.success("OTP sent successfully!");
+        } else {
+          await dispatch(loginAdmin(loginData)).unwrap();
+          toast.success("Login successful!");
+          navigate("/dashboard");
+        }
       } else {
-        // Dispatch login action
-        dispatch(loginAdmin(loginData));
-        navigate("/dashboard");
-        toast.success("Login successful!");
+        await dispatch(signupAdmin(signupData)).unwrap();
+        toast.success("Signup successful! Please log in.");
       }
-    } else {
-      // Dispatch signup action
-      dispatch(signupAdmin(signupData));
-      navigate("/login");
-      toast.success("Signup successful! Please log in.");
+    } catch (error) {
+      console.error("Auth error:", error);
+      toast.error(error?.message || "Something went wrong. Please try again.");
     }
   };
 
